@@ -1,0 +1,45 @@
+*,
+*:after,
+*:before {
+  margin: 0px;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+#page-head {
+  background: #E5F3F2;
+  height: 30%;
+}
+
+#page-title {
+  padding-top: 2%;
+  font-family: 'Roboto Slab', sans serif;
+  font-weight: 700;
+  height: auto;
+  text-align: center;
+}
+
+#page-title #teal {
+  color: #00A79D;
+}
+
+#page-title #grey {
+  color: #6D6E71;
+}
+
+#title-input, 
+#body-input, 
+#save-button,
+#search-input {
+  display: block;
+  height: 12%;
+  margin: 1.5% auto;
+  width: 60%;
+}
+
+#save-button {
+  background: #045E55;
+  border: none;
+  color: #FFFFFF;
+}
+
