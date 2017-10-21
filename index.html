@@ -2,10 +2,10 @@
 <html lang="en">
   <head>
     <title>Idea Box</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="reset.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
     <header id="page-head">
@@ -13,10 +13,10 @@
       <label for="input-form">
         <form id="input-form">
           <label for="title-input">
-            <input type="text" placeholder="Title" id="title-input">
+            <input id="title-input" type="text" placeholder="Title">
           </label>
           <label for="body-input">
-            <input type="text" placeholder="Body" id="body-input">
+            <input id="body-input" type="text" placeholder="Body">
           </label>
           <label for="save-button">
             <button id="save-button" type="submit"> save </button>
@@ -26,9 +26,22 @@
     </header>
     <section id="idea-storage">
       <label for="search-input">
-        <input type="text" id="search-input" placeholder="Search">
+        <input id="search-input" type="text" placeholder="Search">
       </label>
-      <!--This is where the ideas will be stored-->
+      <article class="card">
+        <h2 class="idea-title"> Example idea
+          <span class="delete">
+            <img src="images/delete.svg" class="delete" alt="delete-icon">
+          </span>
+        </h2>
+        <p class="idea-body"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pellentesque ut enim nec congue.</p>
+        <span class="upvote">
+          <img src="images/upvote.svg" alt="upvote-icon">
+        </span>
+        <span class="downvote">
+          <img src="images/downvote.svg" alt="downvote-icon">
+        </span>
+        <p class="bold-quality-text">quality: <span class="quality">swill</span></p>
     </section>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
