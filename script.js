@@ -1,5 +1,5 @@
 $('document').ready(function() {
-
+loadIdeas();
 
 // GLOBAL VARIABLES
 var titleInput = $('#title-input');
@@ -13,6 +13,8 @@ saveButton.on('click', submitIdea);
 loadIdeas();
 //saveButton.on('click', addStorage);
 $('#idea-storage').on('click', '.delete', deleteCard);
+saveButton.on('click', addStorage);
+
 
 // FUNCTIONS
 function submitIdea(event) {
