@@ -1,5 +1,5 @@
 $('document').ready(function() {
-
+loadIdeas();
 
 // GLOBAL VARIABLES
 var titleInput = $('#title-input');
@@ -10,31 +10,12 @@ var ideaStorage = $('#idea-storage');
 // EVENT LISTENERS
 saveButton.on('click', submitIdea);
 saveButton.on('click', addStorage);
-loadIdeas();
+
 
 // FUNCTIONS
 function submitIdea(event) {
   event.preventDefault();
   prepend(titleInput.val(), bodyInput.val())
-  // ideaStorage.prepend(
-  //   ` 
-  //   <article class="card">
-  //   <h2 class="idea-title"> ${titleInput.val()}
-  //   <span class="delete">
-  //   <img src="images/delete.svg" class="delete" alt="delete-icon">
-  //   </span>
-  //   </h2>
-  //   <p class="idea-body">${bodyInput.val()}</p>
-  //   <span class="upvote">
-  //   <img src="images/upvote.svg" alt="upvote-icon">
-  //   </span>
-  //   <span class="downvote">
-  //   <img src="images/downvote.svg" alt="downvote-icon">
-  //   </span>
-  //   <p class="bold-quality-text">quality: <span class="quality">swill</span></p>
-  //   </article>
-  //   `
-  //   );
 };
 
 function prepend(title, body) {
@@ -69,25 +50,6 @@ function addStorage() {
 function loadIdeas() {
   for (var i=0; i<Object.keys(localStorage).length; i++) {
     prepend(JSON.parse(Object.values(localStorage)[i]).title, JSON.parse(Object.values(localStorage)[i]).body)
-    // ideaStorage.prepend(
-    // ` 
-    // <article class="card">
-    // <h2 class="idea-title"> ${JSON.parse(Object.values(localStorage)[i]).title}
-    // <span class="delete">
-    // <img src="images/delete.svg" class="delete" alt="delete-icon">
-    // </span>
-    // </h2>
-    // <p class="idea-body">${JSON.parse(Object.values(localStorage)[i]).body}</p>
-    // <span class="upvote">
-    // <img src="images/upvote.svg" alt="upvote-icon">
-    // </span>
-    // <span class="downvote">
-    // <img src="images/downvote.svg" alt="downvote-icon">
-    // </span>
-    // <p class="bold-quality-text">quality: <span class="quality">swill</span></p>
-    // </article>
-    // `
-    // );
   }
 }
 
