@@ -18,10 +18,10 @@ $('#idea-storage').on('click', '.delete', deleteCard);
 function submitIdea(event) {
   event.preventDefault();
   addStorage();
-  prepend(titleInput.val(), bodyInput.val())
+  createCard(titleInput.val(), bodyInput.val())
 };
 
-function prepend(title, body) {
+function createCard(title, body) {
     ideaStorage.prepend(
     ` 
     <article class="card" id="${key}">
@@ -45,8 +45,9 @@ function prepend(title, body) {
 }
 
 function deleteCard() {
-  $(this).closest('article').remove();
-  console.log('article id', $(this).parent().attr('id'));
+  var cardId = $(this).closest('article').prop('id');
+  console.log($(this).closest('article')
+    );
 }
 
 function addStorage() {
@@ -60,7 +61,7 @@ function addStorage() {
 
 function loadIdeas() {
   for (var i = 0; i < localStorage.length; i++) {
-    prepend(JSON.parse(Object.values(localStorage)[i]).title, JSON.parse(Object.values(localStorage)[i]).body)
+    createCard(JSON.parse(Object.values(localStorage)[i]).title, JSON.parse(Object.values(localStorage)[i]).body)
   }
 }
 
