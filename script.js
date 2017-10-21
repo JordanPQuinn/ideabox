@@ -15,15 +15,38 @@ loadIdeas();
 // FUNCTIONS
 function submitIdea(event) {
   event.preventDefault();
-  ideaStorage.prepend(
+  prepend(titleInput.val(), bodyInput.val())
+  // ideaStorage.prepend(
+  //   ` 
+  //   <article class="card">
+  //   <h2 class="idea-title"> ${titleInput.val()}
+  //   <span class="delete">
+  //   <img src="images/delete.svg" class="delete" alt="delete-icon">
+  //   </span>
+  //   </h2>
+  //   <p class="idea-body">${bodyInput.val()}</p>
+  //   <span class="upvote">
+  //   <img src="images/upvote.svg" alt="upvote-icon">
+  //   </span>
+  //   <span class="downvote">
+  //   <img src="images/downvote.svg" alt="downvote-icon">
+  //   </span>
+  //   <p class="bold-quality-text">quality: <span class="quality">swill</span></p>
+  //   </article>
+  //   `
+  //   );
+};
+
+function prepend(title, body) {
+    ideaStorage.prepend(
     ` 
     <article class="card">
-    <h2 class="idea-title"> ${titleInput.val()}
+    <h2 class="idea-title"> ${title}
     <span class="delete">
     <img src="images/delete.svg" class="delete" alt="delete-icon">
     </span>
     </h2>
-    <p class="idea-body">${bodyInput.val()}</p>
+    <p class="idea-body">${body}</p>
     <span class="upvote">
     <img src="images/upvote.svg" alt="upvote-icon">
     </span>
@@ -34,7 +57,7 @@ function submitIdea(event) {
     </article>
     `
     );
-};
+}
 
 function addStorage() {
   var title = titleInput.val();
@@ -45,25 +68,26 @@ function addStorage() {
 
 function loadIdeas() {
   for (var i=0; i<Object.keys(localStorage).length; i++) {
-    ideaStorage.prepend(
-    ` 
-    <article class="card">
-    <h2 class="idea-title"> ${JSON.parse(Object.values(localStorage)[i]).title}
-    <span class="delete">
-    <img src="images/delete.svg" class="delete" alt="delete-icon">
-    </span>
-    </h2>
-    <p class="idea-body">${JSON.parse(Object.values(localStorage)[i]).body}</p>
-    <span class="upvote">
-    <img src="images/upvote.svg" alt="upvote-icon">
-    </span>
-    <span class="downvote">
-    <img src="images/downvote.svg" alt="downvote-icon">
-    </span>
-    <p class="bold-quality-text">quality: <span class="quality">swill</span></p>
-    </article>
-    `
-    );
+    prepend(JSON.parse(Object.values(localStorage)[i]).title, JSON.parse(Object.values(localStorage)[i]).body)
+    // ideaStorage.prepend(
+    // ` 
+    // <article class="card">
+    // <h2 class="idea-title"> ${JSON.parse(Object.values(localStorage)[i]).title}
+    // <span class="delete">
+    // <img src="images/delete.svg" class="delete" alt="delete-icon">
+    // </span>
+    // </h2>
+    // <p class="idea-body">${JSON.parse(Object.values(localStorage)[i]).body}</p>
+    // <span class="upvote">
+    // <img src="images/upvote.svg" alt="upvote-icon">
+    // </span>
+    // <span class="downvote">
+    // <img src="images/downvote.svg" alt="downvote-icon">
+    // </span>
+    // <p class="bold-quality-text">quality: <span class="quality">swill</span></p>
+    // </article>
+    // `
+    // );
   }
 }
 
