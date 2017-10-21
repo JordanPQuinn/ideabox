@@ -6,22 +6,27 @@ var titleInput = $('#title-input');
 var bodyInput = $('#body-input');
 var saveButton = $('#save-button');
 var ideaStorage = $('#idea-storage');
+var key;
 
 // EVENT LISTENERS
 saveButton.on('click', submitIdea);
+loadIdeas();
+//saveButton.on('click', addStorage);
+$('#idea-storage').on('click', '.delete', deleteCard);
 saveButton.on('click', addStorage);
 
 
 // FUNCTIONS
 function submitIdea(event) {
   event.preventDefault();
-  prepend(titleInput.val(), bodyInput.val())
+  addStorage();
+  createCard(titleInput.val(), bodyInput.val())
 };
 
-function prepend(title, body) {
+function createCard(title, body) {
     ideaStorage.prepend(
     ` 
-    <article class="card">
+    <article class="card" id="${key}">
     <h2 class="idea-title"> ${title}
     <span class="delete">
     <img src="images/delete.svg" class="delete" alt="delete-icon">
@@ -38,18 +43,27 @@ function prepend(title, body) {
     </article>
     `
     );
+    console.log('this.key', key);
+}
+
+function deleteCard() {
+  var cardId = $(this).closest('article').prop('id');
+  console.log($(this).closest('article')
+    );
 }
 
 function addStorage() {
   var title = titleInput.val();
   var body = bodyInput.val();
   var newIdea = JSON.stringify({title, body});
-  localStorage.setItem(Date.now(), newIdea);
+  key = Date.now();
+  console.log('addstoragekey', key);
+  localStorage.setItem(key, newIdea);
 }
 
 function loadIdeas() {
-  for (var i=0; i<Object.keys(localStorage).length; i++) {
-    prepend(JSON.parse(Object.values(localStorage)[i]).title, JSON.parse(Object.values(localStorage)[i]).body)
+  for (var i = 0; i < localStorage.length; i++) {
+    createCard(JSON.parse(Object.values(localStorage)[i]).title, JSON.parse(Object.values(localStorage)[i]).body)
   }
 }
 
