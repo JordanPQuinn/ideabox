@@ -1,5 +1,6 @@
 $('document').ready(function() {
 
+
 // GLOBAL VARIABLES
 var titleInput = $('#title-input');
 var bodyInput = $('#body-input');
@@ -9,6 +10,7 @@ var ideaStorage = $('#idea-storage');
 // EVENT LISTENERS
 saveButton.on('click', submitIdea);
 saveButton.on('click', addStorage);
+loadIdeas();
 
 // FUNCTIONS
 function submitIdea(event) {
@@ -41,6 +43,29 @@ function addStorage() {
   localStorage.setItem(Date.now(), newIdea);
 }
 
+function loadIdeas() {
+  for (var i=0; i<Object.keys(localStorage).length; i++) {
+    ideaStorage.prepend(
+    ` 
+    <article class="card">
+    <h2 class="idea-title"> ${JSON.parse(Object.values(localStorage)[i]).title}
+    <span class="delete">
+    <img src="images/delete.svg" class="delete" alt="delete-icon">
+    </span>
+    </h2>
+    <p class="idea-body">${JSON.parse(Object.values(localStorage)[i]).body}</p>
+    <span class="upvote">
+    <img src="images/upvote.svg" alt="upvote-icon">
+    </span>
+    <span class="downvote">
+    <img src="images/downvote.svg" alt="downvote-icon">
+    </span>
+    <p class="bold-quality-text">quality: <span class="quality">swill</span></p>
+    </article>
+    `
+    );
+  }
+}
 
 
 });
