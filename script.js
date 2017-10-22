@@ -1,29 +1,50 @@
 $('document').ready(function() {
-loadIdeas();
+
 
 // GLOBAL VARIABLES
 var titleInput = $('#title-input');
 var bodyInput = $('#body-input');
 var saveButton = $('#save-button');
 var ideaStorage = $('#idea-storage');
-var key;
+var keyId;
+
 
 // EVENT LISTENERS
 saveButton.on('click', submitIdea);
-loadIdeas();
-//saveButton.on('click', addStorage);
-$('#idea-storage').on('click', '.delete', deleteCard);
-saveButton.on('click', addStorage);
+ideaStorage.on('click', '.delete', deleteCard);
 
 
 // FUNCTIONS
+loadIdeas();
+
+function loadIdeas() {
+  for (var i = 0; i < localStorage.length; i++) {
+    let title = JSON.parse(Object.values(localStorage)[i]).title;
+    let body = JSON.parse(Object.values(localStorage)[i]).body;
+    let key = JSON.parse(Object.values(localStorage)[i]).keyId;
+    createCard(title, body, key);
+  }
+}
+
+function IdeaCard() {
+  this.title = titleInput.val();
+  this.body = bodyInput.val();
+  this.keyId = keyId;
+}
+
 function submitIdea(event) {
   event.preventDefault();
   addStorage();
-  createCard(titleInput.val(), bodyInput.val())
+  createCard(titleInput.val(), bodyInput.val(), keyId)
 };
 
-function createCard(title, body) {
+function addStorage() {
+  keyId = Date.now();
+  var newIdea = JSON.stringify(new IdeaCard);
+  localStorage.setItem(keyId, newIdea);
+}
+
+function createCard(title, body, key) {
     ideaStorage.prepend(
     ` 
     <article class="card" id="${key}">
@@ -43,29 +64,16 @@ function createCard(title, body) {
     </article>
     `
     );
-    console.log('this.key', key);
 }
 
 function deleteCard() {
-  var cardId = $(this).closest('article').prop('id');
-  console.log($(this).closest('article')
-    );
+  $(this).closest('article').remove();
+  // 1. find ID - DONE
+  // 2. use array method to find ID/Key match 
+  // 3. localStorage.removeItem with matching key
+  console.log($(this).closest('article').prop('id')); //ID found
 }
 
-function addStorage() {
-  var title = titleInput.val();
-  var body = bodyInput.val();
-  var newIdea = JSON.stringify({title, body});
-  key = Date.now();
-  console.log('addstoragekey', key);
-  localStorage.setItem(key, newIdea);
-}
-
-function loadIdeas() {
-  for (var i = 0; i < localStorage.length; i++) {
-    createCard(JSON.parse(Object.values(localStorage)[i]).title, JSON.parse(Object.values(localStorage)[i]).body)
-  }
-}
 
 
 });
