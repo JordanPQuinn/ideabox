@@ -1,22 +1,21 @@
 $('document').ready(function() {
-loadIdeas();
+
 
 // GLOBAL VARIABLES
 var titleInput = $('#title-input');
 var bodyInput = $('#body-input');
 var saveButton = $('#save-button');
 var ideaStorage = $('#idea-storage');
-var key;
+var keyId;
 
 // EVENT LISTENERS
 saveButton.on('click', submitIdea);
-loadIdeas();
-//saveButton.on('click', addStorage);
 $('#idea-storage').on('click', '.delete', deleteCard);
-saveButton.on('click', addStorage);
 
 
 // FUNCTIONS
+loadIdeas();
+
 function submitIdea(event) {
   event.preventDefault();
   addStorage();
@@ -26,7 +25,7 @@ function submitIdea(event) {
 function createCard(title, body) {
     ideaStorage.prepend(
     ` 
-    <article class="card" id="${key}">
+    <article class="card" id="${keyId}">
     <h2 class="idea-title"> ${title}
     <span class="delete">
     <img src="images/delete.svg" class="delete" alt="delete-icon">
@@ -43,28 +42,29 @@ function createCard(title, body) {
     </article>
     `
     );
-    console.log('this.key', key);
 }
 
 function deleteCard() {
   var cardId = $(this).closest('article').prop('id');
-  console.log($(this).closest('article')
-    );
+  console.log($(this).closest('article').prop('id'));
 }
 
 function addStorage() {
-  var title = titleInput.val();
-  var body = bodyInput.val();
-  var newIdea = JSON.stringify({title, body});
-  key = Date.now();
-  console.log('addstoragekey', key);
-  localStorage.setItem(key, newIdea);
+  keyId = Date.now();
+  var newIdea = JSON.stringify(new IdeaCard);
+  localStorage.setItem(keyId, newIdea);
 }
 
 function loadIdeas() {
   for (var i = 0; i < localStorage.length; i++) {
     createCard(JSON.parse(Object.values(localStorage)[i]).title, JSON.parse(Object.values(localStorage)[i]).body)
   }
+}
+
+function IdeaCard() {
+  this.title = titleInput.val();
+  this.body = bodyInput.val();
+  this.keyId = keyId;
 }
 
 
