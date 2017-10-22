@@ -1,9 +1,13 @@
+/*General body selector for box-model*/
+
 *,
 *:after,
 *:before {
   margin: 0px;
   box-sizing: border-box;
 }
+
+/* Header and input field for idea submission */
 
 #page-head {
   background: #E5F3F2;
@@ -44,6 +48,8 @@ input::-webkit-input-placeholder {
   padding: 2px;
 
 }
+
+/*Search bar and idea storage*/
 
 #search-input {
   height: 4%;
