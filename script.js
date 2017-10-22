@@ -68,10 +68,16 @@ function createCard(title, body, key) {
 
 function deleteCard() {
   $(this).closest('article').remove();
-  // 1. find ID - DONE
-  // 2. use array method to find ID/Key match 
-  // 3. localStorage.removeItem with matching key
-  console.log($(this).closest('article').prop('id')); //ID found
+  for (var i = 0; i < localStorage.length; i++) {
+    let key = JSON.parse(Object.values(localStorage)[i]).keyId;
+    var keyToDelete = parseInt($(this).closest('article').prop('id'));
+    // console.log(key);
+    // console.log(parseInt($(this).closest('article').prop('id')));
+    if (key === keyToDelete) {
+      // console.log('test works');
+      localStorage.removeItem(key);
+    }
+  }
 }
 
 
