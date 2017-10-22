@@ -12,6 +12,7 @@ var keyId;
 // EVENT LISTENERS
 saveButton.on('click', submitIdea);
 ideaStorage.on('click', '.delete', deleteCard);
+ideaStorage.on('mousedown', '.idea-body', editBody)
 
 
 // FUNCTIONS
@@ -84,9 +85,25 @@ function deleteCard() {
 function clearInput() {
   titleInput.val('');
   bodyInput.val('');
-
 }
 
+//Function overview: searches to see if the key for the current article is equal.
+//If so, grab the storedBody information. 
+//Next step will be to set the storedBody information to the editedBody information.
+
+function editBody() {
+  var bodyToEdit = $(this).closest('.idea-body');
+  console.log(bodyToEdit.text());
+  bodyToEdit.prop('contenteditable', 'true');
+  for (var i = 0; i < localStorage.length; i++) {
+    let key = JSON.parse(Object.values(localStorage)[i]).keyId;
+    var keyToEdit = parseInt($(this).closest('article').prop('id'));
+    if(key === keyToEdit) {
+      var storedBody = (JSON.parse(Object.values(localStorage)[i]).body);
+      console.log(storedBody);
+    }
+  }
+}
 
 
 });
