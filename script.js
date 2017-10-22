@@ -35,7 +35,8 @@ function IdeaCard() {
 function submitIdea(event) {
   event.preventDefault();
   addStorage();
-  createCard(titleInput.val(), bodyInput.val(), keyId)
+  createCard(titleInput.val(), bodyInput.val(), keyId);
+  clearInput();
 };
 
 function addStorage() {
@@ -78,6 +79,12 @@ function deleteCard() {
       localStorage.removeItem(key);
     }
   }
+}
+
+function clearInput() {
+  titleInput.val('');
+  bodyInput.val('');
+
 }
 
 
