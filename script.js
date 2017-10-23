@@ -12,48 +12,50 @@ var keyId;
 // EVENT LISTENERS
 saveButton.on('click', submitIdea);
 ideaStorage.on('click', '.delete', deleteCard);
-
+ideaStorage.on('blur', '.idea-title, .idea-body', editIdea);
 
 // FUNCTIONS
+titleInput.focus();
 loadIdeas();
 
 function loadIdeas() {
   for (var i = 0; i < localStorage.length; i++) {
     let title = JSON.parse(Object.values(localStorage)[i]).title;
     let body = JSON.parse(Object.values(localStorage)[i]).body;
-    let key = JSON.parse(Object.values(localStorage)[i]).keyId;
+    let key = JSON.parse(Object.values(localStorage)[i]).keyInStorage;
     createCard(title, body, key);
   }
 }
 
-function IdeaCard() {
-  this.title = titleInput.val();
-  this.body = bodyInput.val();
-  this.keyId = keyId;
+function IdeaCard(title, body, keyInStorage) {
+  this.title = title;
+  this.body = body;
+  this.keyInStorage = keyInStorage;
+  this.quality = 'swill';
 }
 
 function submitIdea(event) {
   event.preventDefault();
   addStorage();
-  createCard(titleInput.val(), bodyInput.val(), keyId)
+  createCard(titleInput.val(), bodyInput.val(), keyId);
+  clearInput();
 };
-
+ 
 function addStorage() {
   keyId = Date.now();
-  var newIdea = JSON.stringify(new IdeaCard);
+  let newIdea = JSON.stringify(new IdeaCard(titleInput.val(), bodyInput.val(), keyId));
   localStorage.setItem(keyId, newIdea);
 }
 
 function createCard(title, body, key) {
-    ideaStorage.prepend(
+  ideaStorage.prepend(
     ` 
     <article class="card" id="${key}">
-    <h2 class="idea-title"> ${title}
+    <h2 class="idea-title" contenteditable="true">${title}</h2>
     <span class="delete">
     <img src="images/delete.svg" class="delete" alt="delete-icon">
     </span>
-    </h2>
-    <p class="idea-body">${body}</p>
+    <p class="idea-body" contenteditable="true">${body}</p>
     <span class="upvote">
     <img src="images/upvote.svg" alt="upvote-icon">
     </span>
@@ -63,21 +65,31 @@ function createCard(title, body, key) {
     <p class="bold-quality-text">quality: <span class="quality">swill</span></p>
     </article>
     `
-    );
+  );
 }
 
 function deleteCard() {
   $(this).closest('article').remove();
+  let keyToDelete = parseInt($(this).closest('article').prop('id'));
   for (var i = 0; i < localStorage.length; i++) {
-    let key = JSON.parse(Object.values(localStorage)[i]).keyId;
-    var keyToDelete = parseInt($(this).closest('article').prop('id'));
-    // console.log(key);
-    // console.log(parseInt($(this).closest('article').prop('id')));
+    let key = JSON.parse(Object.values(localStorage)[i]).keyInStorage;
     if (key === keyToDelete) {
-      // console.log('test works');
       localStorage.removeItem(key);
     }
   }
+}
+
+function clearInput() {
+  titleInput.val('');
+  bodyInput.val('');
+}
+
+function editIdea() {
+  let ideaCardKey = parseInt($(this).closest('article').prop('id'));
+  let editTitle = $(this).parent().children('.idea-title').text();
+  let editBody = $(this).parent().children('.idea-body').text();
+  let changedIdea = JSON.stringify(new IdeaCard(editTitle, editBody, ideaCardKey));
+  localStorage[ideaCardKey] = changedIdea;
 }
 
 
