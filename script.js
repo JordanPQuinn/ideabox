@@ -27,13 +27,6 @@ function loadIdeas() {
   }
 }
 
-/*function IdeaCard() {
-  this.title = titleInput.val();
-  this.body = bodyInput.val();
-  this.keyId = keyId;
-  this.quality = 'swill';
-}*/
-
 function IdeaCard(title, body, keyInStorage) {
   this.title = title;
   this.body = body;
@@ -92,9 +85,7 @@ function clearInput() {
 }
 
 function editIdea() {
-  console.log('titletext', $(this).parent().children('.idea-title').text());
-  console.log('bodytext', $(this).parent().children('.idea-body').text());
-  let ideaCardKey = $(this).closest('article').prop('id');
+  let ideaCardKey = parseInt($(this).closest('article').prop('id'));
   let editTitle = $(this).parent().children('.idea-title').text();
   let editBody = $(this).parent().children('.idea-body').text();
   let changedIdea = JSON.stringify(new IdeaCard(editTitle, editBody, ideaCardKey));
