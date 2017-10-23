@@ -80,6 +80,8 @@ img{
 
 .delete {
   float:right;
+  display: inline-block;
+  margin-top: 5px;
 }
 
 .idea-title {
@@ -87,6 +89,7 @@ img{
   font-family: 'Roboto Slab', 'sans serif';
   font-weight: 700;
   margin: 5px 0px;
+  display: inline-block;
 }
 
 .idea-body {
