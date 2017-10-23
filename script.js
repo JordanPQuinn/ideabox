@@ -6,6 +6,7 @@ var titleInput = $('#title-input');
 var bodyInput = $('#body-input');
 var saveButton = $('#save-button');
 var ideaStorage = $('#idea-storage');
+var searchInput = $('#search-input');
 var keyId;
 
 
@@ -13,6 +14,7 @@ var keyId;
 saveButton.on('click', submitIdea);
 ideaStorage.on('click', '.delete', deleteCard);
 ideaStorage.on('blur', '.idea-title, .idea-body', editIdea);
+searchInput.on('keyup', searchIdeas);
 
 // FUNCTIONS
 titleInput.focus();
@@ -92,6 +94,25 @@ function editIdea() {
   localStorage[ideaCardKey] = changedIdea;
 }
 
+function searchIdeas() {
+  if (searchInput.val().length === 0) {
+    //hide all ideas
+    console.log('all cards hidden!');
+  }
+  else {
+    //access each title and body separately
+    //test title and body for match
+    var storageKeys = Object.keys(localStorage);
+    storageKeys.forEach(function(n) {
+      let title = JSON.parse(localStorage[n]).title;
+      let body = JSON.parse(localStorage[n]).body;
+      console.log(title, body);
+
+    });
+
+
+  }
+}
 
 
 });
