@@ -6,6 +6,7 @@ var titleInput = $('#title-input');
 var bodyInput = $('#body-input');
 var saveButton = $('#save-button');
 var ideaStorage = $('#idea-storage');
+var searchInput = $('#search-input');
 var keyId;
 
 
@@ -13,6 +14,7 @@ var keyId;
 saveButton.on('click', submitIdea);
 ideaStorage.on('click', '.delete', deleteCard);
 ideaStorage.on('blur', '.idea-title, .idea-body', editIdea);
+searchInput.on('keyup', searchIdeas);
 
 // FUNCTIONS
 titleInput.focus();
@@ -93,5 +95,19 @@ function editIdea() {
 }
 
 
+
+function searchIdeas() {
+  var currentSearch = $('#search-input').val();
+  var bodyContent = $('.idea-body');
+  var titleContent = $('.idea-title');
+  for(var i = 0; i < bodyContent.length; i++) {
+    if($(bodyContent[i]).text().includes(currentSearch) || ($(titleContent[i]).text().includes(currentSearch))){
+      $(bodyContent[i]).closest('article').show();
+    }
+    else {
+      $(bodyContent[i]).closest('article').hide();
+    }
+  }
+}
 
 });
