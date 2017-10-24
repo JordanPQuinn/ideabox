@@ -109,18 +109,4 @@ function searchIdeas() {
   }
 }
 
-function upvoteQuality() {
-  var currentQuality = $(this).parent().children('.bold-quality-text')
-  if(currentQuality.text().includes('swill')) {
-    currentQuality.text('quality: plausible');
-    return;
-  }
-  if(currentQuality.text().includes('plausible')){
-    currentQuality.text('quality: genius');
-    return;
-  }
-  
-}
-
-
 });
