@@ -14,6 +14,7 @@ var keyId;
 saveButton.on('click', submitIdea);
 ideaStorage.on('click', '.delete', deleteCard);
 ideaStorage.on('blur', '.idea-title, .idea-body', editIdea);
+ideaStorage.on('click', '.upvote', upvoteQuality)
 searchInput.on('keyup', searchIdeas);
 
 // FUNCTIONS
@@ -94,8 +95,6 @@ function editIdea() {
   localStorage[ideaCardKey] = changedIdea;
 }
 
-
-
 function searchIdeas() {
   var currentSearch = $('#search-input').val();
   var bodyContent = $('.idea-body');
@@ -109,5 +108,19 @@ function searchIdeas() {
     }
   }
 }
+
+function upvoteQuality() {
+  var currentQuality = $(this).parent().children('.bold-quality-text')
+  if(currentQuality.text().includes('swill')) {
+    currentQuality.text('quality: plausible');
+    return;
+  }
+  if(currentQuality.text().includes('plausible')){
+    currentQuality.text('quality: genius');
+    return;
+  }
+  
+}
+
 
 });
