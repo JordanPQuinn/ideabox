@@ -94,6 +94,25 @@ function editIdea() {
   localStorage[ideaCardKey] = changedIdea;
 }
 
+function searchIdeas() {
+  if (searchInput.val().length === 0) {
+    //hide all ideas
+    console.log('all cards hidden!');
+  }
+  else {
+    //access each title and body separately
+    //test title and body for match
+    var storageKeys = Object.keys(localStorage);
+    storageKeys.forEach(function(n) {
+      let title = JSON.parse(localStorage[n]).title;
+      let body = JSON.parse(localStorage[n]).body;
+      console.log(title, body);
+
+    });
+
+
+  }
+}
 
 
 function searchIdeas() {
