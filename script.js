@@ -26,7 +26,8 @@ function loadIdeas() {
     let title = JSON.parse(Object.values(localStorage)[i]).title;
     let body = JSON.parse(Object.values(localStorage)[i]).body;
     let key = JSON.parse(Object.values(localStorage)[i]).keyInStorage;
-    createCard(title, body, key);
+    let quality = JSON.parse(Object.values(localStorage)[i]).quality;
+    createCard(title, body, key, quality);
   }
 }
 
@@ -34,13 +35,13 @@ function IdeaCard(title, body, keyInStorage, quality) {
   this.title = title;
   this.body = body;
   this.keyInStorage = keyInStorage;
-  this.quality = quality === undefined? 0 : quality;
+  this.quality = quality === undefined? 'swill' : quality;
 }
 
 function submitIdea(event) {
   event.preventDefault();
   addStorage();
-  createCard(titleInput.val(), bodyInput.val(), keyId);
+  createCard(titleInput.val(), bodyInput.val(), keyId, 'swill');
   titleInput.val('');
   bodyInput.val('');
 };
@@ -51,7 +52,7 @@ function addStorage() {
   localStorage.setItem(keyId, newIdea);
 }
 
-function createCard(title, body, key) {
+function createCard(title, body, key, quality) {
   ideaStorage.prepend(
     ` 
     <article class="card" id="${key}">
@@ -66,7 +67,7 @@ function createCard(title, body, key) {
     <span class="downvote">
     <img src="images/downvote.svg" alt="downvote-icon">
     </span>
-    <p class="bold-quality-text">quality: <span class="quality">swill</span></p>
+    <p class="bold-quality-text">quality: <span class="quality">${quality}</span></p>
     </article>
     `
   );
@@ -87,7 +88,9 @@ function editIdea() {
   let ideaCardKey = parseInt($(this).closest('article').prop('id'));
   let editTitle = $(this).parent().children('.idea-title').text();
   let editBody = $(this).parent().children('.idea-body').text();
-  let changedIdea = JSON.stringify(new IdeaCard(editTitle, editBody, ideaCardKey));
+  let currentQuality = $(this).parent().children('.bold-quality-text').children('.quality').text();
+  console.log(currentQuality);
+  let changedIdea = JSON.stringify(new IdeaCard(editTitle, editBody, ideaCardKey, currentQuality));
   localStorage[ideaCardKey] = changedIdea;
 }
 
@@ -110,17 +113,14 @@ function upvoteIdea() {
   let currentTitle = JSON.parse(localStorage[ideaCardKey]).title;
   let currentBody = JSON.parse(localStorage[ideaCardKey]).body;
   let currentQuality = JSON.parse(localStorage[ideaCardKey]).quality;
-  let newQuality = 0;
-  if (currentQuality === 1) {
+  if (currentQuality === 'plausible') {
     $(this).next().next().children('.quality').text('genius');
-    newQuality = currentQuality + 1;
-    let updatedIdea = JSON.stringify(new IdeaCard(currentTitle, currentBody, ideaCardKey, newQuality));
+    let updatedIdea = JSON.stringify(new IdeaCard(currentTitle, currentBody, ideaCardKey, 'genius'));
     localStorage[ideaCardKey] = updatedIdea;
   }
-  if (currentQuality === 0) {
+  if (currentQuality === 'swill') {
     $(this).next().next().children('.quality').text('plausible');
-    newQuality = currentQuality + 1;
-    let updatedIdea = JSON.stringify(new IdeaCard(currentTitle, currentBody, ideaCardKey, newQuality));
+    let updatedIdea = JSON.stringify(new IdeaCard(currentTitle, currentBody, ideaCardKey, 'plausible'));
     localStorage[ideaCardKey] = updatedIdea;
   }
 }
@@ -130,16 +130,15 @@ function downvoteIdea() {
   let currentTitle = JSON.parse(localStorage[ideaCardKey]).title;
   let currentBody = JSON.parse(localStorage[ideaCardKey]).body;
   let currentQuality = JSON.parse(localStorage[ideaCardKey]).quality;
-  let newQuality = 0;
-  if (currentQuality === 1) {
+  if (currentQuality === 'plausible') {
     $(this).next().children('.quality').text('swill');
-    let updatedIdea = JSON.stringify(new IdeaCard(currentTitle, currentBody, ideaCardKey, newQuality));
+    let updatedIdea = JSON.stringify(new IdeaCard(currentTitle, currentBody, ideaCardKey, 'swill'));
     localStorage[ideaCardKey] = updatedIdea;
   }
-  if (currentQuality === 2) {
+  if (currentQuality === 'genius') {
     $(this).next().children('.quality').text('plausible');
     newQuality = 1;
-    let updatedIdea = JSON.stringify(new IdeaCard(currentTitle, currentBody, ideaCardKey, newQuality));
+    let updatedIdea = JSON.stringify(new IdeaCard(currentTitle, currentBody, ideaCardKey, 'plausible'));
     localStorage[ideaCardKey] = updatedIdea;
   }
 }
