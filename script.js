@@ -75,13 +75,8 @@ function createCard(title, body, key, quality) {
 
 function deleteCard() {
   $(this).closest('article').remove();
-  let keyToDelete = parseInt($(this).closest('article').prop('id'));
-  for (var i = 0; i < localStorage.length; i++) {
-    let key = JSON.parse(Object.values(localStorage)[i]).keyInStorage;
-    if (key === keyToDelete) {
-      localStorage.removeItem(key);
-    }
-  }
+  let ideaCardKey = parseInt($(this).closest('article').prop('id'));
+  localStorage.removeItem(ideaCardKey);
 }
 
 function editIdea() {
@@ -89,7 +84,6 @@ function editIdea() {
   let editTitle = $(this).parent().children('.idea-title').text();
   let editBody = $(this).parent().children('.idea-body').text();
   let currentQuality = $(this).parent().children('.bold-quality-text').children('.quality').text();
-  console.log(currentQuality);
   let changedIdea = JSON.stringify(new IdeaCard(editTitle, editBody, ideaCardKey, currentQuality));
   localStorage[ideaCardKey] = changedIdea;
 }
