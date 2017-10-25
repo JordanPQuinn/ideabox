@@ -1,6 +1,5 @@
 $('document').ready(function() {
 
-
 // GLOBAL VARIABLES
 var titleInput = $('#title-input');
 var bodyInput = $('#body-input');
@@ -14,7 +13,8 @@ var keyId;
 saveButton.on('click', submitIdea);
 ideaStorage.on('click', '.delete', deleteCard);
 ideaStorage.on('blur', '.idea-title, .idea-body', editIdea);
-ideaStorage.on('click', '.upvote', upvoteQuality)
+ideaStorage.on('click', '.upvote', upvoteIdea);
+ideaStorage.on('click', '.downvote', downvoteIdea);
 searchInput.on('keyup', searchIdeas);
 
 // FUNCTIONS
@@ -30,18 +30,19 @@ function loadIdeas() {
   }
 }
 
-function IdeaCard(title, body, keyInStorage) {
+function IdeaCard(title, body, keyInStorage, quality) {
   this.title = title;
   this.body = body;
   this.keyInStorage = keyInStorage;
-  this.quality = 'swill';
+  this.quality = quality === undefined? 0 : quality;
 }
 
 function submitIdea(event) {
   event.preventDefault();
   addStorage();
   createCard(titleInput.val(), bodyInput.val(), keyId);
-  clearInput();
+  titleInput.val('');
+  bodyInput.val('');
 };
  
 function addStorage() {
@@ -82,11 +83,6 @@ function deleteCard() {
   }
 }
 
-function clearInput() {
-  titleInput.val('');
-  bodyInput.val('');
-}
-
 function editIdea() {
   let ideaCardKey = parseInt($(this).closest('article').prop('id'));
   let editTitle = $(this).parent().children('.idea-title').text();
@@ -108,5 +104,45 @@ function searchIdeas() {
     }
   }
 }
+
+function upvoteIdea() {
+  let ideaCardKey = parseInt($(this).closest('article').prop('id'));
+  let currentTitle = JSON.parse(localStorage[ideaCardKey]).title;
+  let currentBody = JSON.parse(localStorage[ideaCardKey]).body;
+  let currentQuality = JSON.parse(localStorage[ideaCardKey]).quality;
+  let newQuality = 0;
+  if (currentQuality === 1) {
+    $(this).next().next().children('.quality').text('genius');
+    newQuality = currentQuality + 1;
+    let updatedIdea = JSON.stringify(new IdeaCard(currentTitle, currentBody, ideaCardKey, newQuality));
+    localStorage[ideaCardKey] = updatedIdea;
+  }
+  if (currentQuality === 0) {
+    $(this).next().next().children('.quality').text('plausible');
+    newQuality = currentQuality + 1;
+    let updatedIdea = JSON.stringify(new IdeaCard(currentTitle, currentBody, ideaCardKey, newQuality));
+    localStorage[ideaCardKey] = updatedIdea;
+  }
+}
+
+function downvoteIdea() {
+  let ideaCardKey = parseInt($(this).closest('article').prop('id'));
+  let currentTitle = JSON.parse(localStorage[ideaCardKey]).title;
+  let currentBody = JSON.parse(localStorage[ideaCardKey]).body;
+  let currentQuality = JSON.parse(localStorage[ideaCardKey]).quality;
+  let newQuality = 0;
+  if (currentQuality === 1) {
+    $(this).next().children('.quality').text('swill');
+    let updatedIdea = JSON.stringify(new IdeaCard(currentTitle, currentBody, ideaCardKey, newQuality));
+    localStorage[ideaCardKey] = updatedIdea;
+  }
+  if (currentQuality === 2) {
+    $(this).next().children('.quality').text('plausible');
+    newQuality = 1;
+    let updatedIdea = JSON.stringify(new IdeaCard(currentTitle, currentBody, ideaCardKey, newQuality));
+    localStorage[ideaCardKey] = updatedIdea;
+  }
+}
+
 
 });
