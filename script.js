@@ -17,6 +17,7 @@ ideaStorage.on('click', '.upvote', upvoteIdea);
 ideaStorage.on('click', '.downvote', downvoteIdea);
 searchInput.on('keyup', searchIdeas);
 
+
 // FUNCTIONS
 titleInput.focus();
 loadIdeas();
@@ -58,16 +59,15 @@ function createCard(title, body, key, quality) {
     <article class="card" id="${key}">
     <h2 class="idea-title" contenteditable="true">${title}</h2>
     <span class="delete">
-    <img src="images/delete.svg" class="delete" alt="delete-icon">
     </span>
     <p class="idea-body" contenteditable="true">${body}</p>
+    <div class="align-box">
     <span class="upvote">
-    <img src="images/upvote.svg" alt="upvote-icon">
     </span>
     <span class="downvote">
-    <img src="images/downvote.svg" alt="downvote-icon">
     </span>
     <p class="bold-quality-text">quality: <span class="quality">${quality}</span></p>
+    </div>
     </article>
     `
   );
@@ -92,6 +92,7 @@ function searchIdeas() {
   var currentSearch = $('#search-input').val();
   var bodyContent = $('.idea-body');
   var titleContent = $('.idea-title');
+  console.log('titleContent', titleContent);
   for(var i = 0; i < bodyContent.length; i++) {
     if($(bodyContent[i]).text().includes(currentSearch) || ($(titleContent[i]).text().includes(currentSearch))){
       $(bodyContent[i]).closest('article').show();
