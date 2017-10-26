@@ -1,13 +1,9 @@
-/*General body selector for box-model*/
-
 *,
 *:after,
 *:before {
-  margin: 0px;
   box-sizing: border-box;
+  margin: 0px;
 }
-
-/* Header and input field for idea submission */
 
 #page-head {
   background: #E5F3F2;
@@ -16,11 +12,11 @@
 
 #page-title {
   font-family: 'Roboto Slab', sans serif;
-  font-size: 4vw;
+  font-size: 5vw;
   font-weight: 700;
   height: auto;
-  margin-bottom: 2%;
-  padding-top: 2%;
+  margin-bottom: 3%;
+  padding-top: 3%;
   text-align: center;
 }
 
@@ -39,33 +35,66 @@
   border: 1px solid #D1D3D4;
   display: block;
   height: 15%;
-  margin: 1% auto;
+  margin: 1.5% auto;
   width: 60%;
 }
 
 input::-webkit-input-placeholder {
   color: #D1D3D4;
   padding: 2px;
-
 }
-
-/*Search bar and idea storage*/
 
 #search-input {
   height: 4%;
+  margin-bottom: 20px;
+  margin-top: 15px;
 }
 
 #save-button {
   background: #00A79D;
   border: none;
   color: #FFFFFF;
-  margin-bottom: 2%;
+  margin-bottom: 15px;
 }
 
 #save-button:hover {
   background: #045E55;
   cursor: pointer;
 }
+
+.upvote-button {
+  background-image: url('images/upvote.svg');
+  background-repeat: no-repeat;
+}
+
+.upvote {
+  background-image: url("images/upvote.svg");
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 15px;
+  margin-right: 10px;
+  width: 15px;
+}
+
+.upvote:hover {
+  background-image: url("images/upvote-hover.svg");
+  cursor: pointer;
+}
+
+.downvote {
+  background-image: url("images/downvote.svg");
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 15px;
+  margin-right: 10px;
+  width: 15px;
+}
+
+.downvote:hover {
+  background-image: url("images/downvote-hover.svg");
+  cursor: pointer;
+}
+
 
 .card {
   border-bottom: 1px solid #D1D3D4;
@@ -79,23 +108,32 @@ img{
 }
 
 .delete {
-  float:right;
+  background-image: url("images/delete.svg");
   display: inline-block;
+  float:right;
+  height: 15px;
   margin-top: 5px;
+  width: 15px;
+}
+
+.delete:hover {
+  background-image: url(images/delete-hover.svg);
+  cursor: pointer;
 }
 
 .idea-title {
   color: #6D6E71;
+  display: inline-block;
   font-family: 'Roboto Slab', 'sans serif';
+  font-size: 14px;
   font-weight: 700;
   margin: 5px 0px;
-  display: inline-block;
 }
 
 .idea-body {
   color: #939598;
   font-family: 'Open Sans', 'sans serif';
-  font-size: 14px;
+  font-size: 10px;
   font-weight: 400;
   margin: 10px 0px;
 }
@@ -104,10 +142,39 @@ img{
   color: #6D6E71;
   display: inline-block;
   font-family: 'Roboto Slab', 'sans serif';
-  font-size: 14px;
+  font-size: 9px;
   font-weight: 400;
   margin-bottom: 10px;
   margin: 0px;
 }
 
-@media 
+.align-box {
+  align-items: center;
+  display: flex;
+  margin: 15px 0;
+}
+
+@media screen and (max-width: 400px) {
+
+  #body-input {
+    padding-bottom: 40px;
+  }
+
+  #idea-storage {
+    height: 45%;
+    overflow: scroll;
+  }
+
+  #title-input, 
+  #body-input, 
+  #save-button,
+  #search-input,
+  .card {
+    width: 90%;
+  }
+
+  #page-title {
+    font-size: 1.25em;
+    padding: 10px 0;
+  }
+}
